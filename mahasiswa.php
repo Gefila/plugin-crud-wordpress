@@ -63,32 +63,48 @@ $users = get_users([
 <h2>Manajemen Mahasiswa</h2>
 <form method="POST" class="mb-4">
     <div class="mb-3">
-        <label for="display_name" class="form-label">Nama Lengkap (Display Name)</label>
-        <input type="text" name="display_name" class="form-control" required>
+        <label class="form-label">Nama Lengkap (Display Name)</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+            <input type="text" name="display_name" class="form-control" placeholder="Nama Lengkap" required>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" name="username" class="form-control" required>
+        <label class="form-label">Username</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" name="email" class="form-control" required>
+        <label class="form-label">Email</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+            <input type="email" name="email" class="form-control" placeholder="Alamat Email" required>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" required>
+        <label class="form-label">Password</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
     </div>
 
     <div class="mb-3">
-        <label for="peran" class="form-label">Peran</label>
-        <select name="peran" class="form-select" required>
-            <option value="mhs">Mahasiswa</option>
-            <option value="dsn">Dosen</option>
-            <option value="kry">Karyawan</option>
-        </select>
+        <label class="form-label">Peran</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+            <select name="peran" class="form-select" required>
+                <option value="">-- Pilih Peran --</option>
+                <option value="mhs">Mahasiswa</option>
+                <option value="dsn">Dosen</option>
+                <option value="kry">Karyawan</option>
+            </select>
+        </div>
     </div>
 
     <div class="text-center">
