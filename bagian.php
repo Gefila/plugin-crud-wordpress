@@ -33,7 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_GET['edit'])) {
         $query = "UPDATE tbl_bagian SET nmbag = '$nmbag' WHERE kdbag = '$kdbag'";
     } else {
-        $query = "INSERT INTO tbl_bagian (kdbag, nmbag) VALUES ('$kdbag', '$nmbag')";
+        $lastKodeQuery = mysqli_query($conn, "SELECT MAX(kdbag) as maxKode FROM tbl_bagian");
+        $nextKode = "01"; // default jika tidak ada data
+        if ($lastKodeQuery && $row = mysqli_fetch_assoc($lastKodeQuery)) {
+            $maxKode = (int)$row['maxKode'];
+            $nextKode = str_pad($maxKode + 1, 2, '0', STR_PAD_LEFT);
+        }
+        $query = "INSERT INTO tbl_bagian (kdbag, nmbag) VALUES ('$nextKode', '$nmbag')";
     }
 
     if (mysqli_query($conn, $query)) {
@@ -63,7 +69,7 @@ $result = mysqli_query($conn, "SELECT * FROM tbl_bagian");
             <span class="input-group-text"><i class="fa-solid fa-hashtag"></i></span>
             <input type="text" class="form-control" id="kdbag" name="kdbag"
                 value="<?= isset($editData['kdbag']) ? htmlspecialchars($editData['kdbag']) : '' ?>"
-                <?= isset($editData['kdbag']) ? 'readonly' : '' ?>>
+                readonly>
         </div>
     </div>
     <div class="mb-3">
