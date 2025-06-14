@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = sanitize_user($_POST['username']);
     $email = sanitize_email($_POST['email']);
     $password = $_POST['password'];
-    $peran = $_POST['peran'];
+    $peran = "mhs"; // Default peran untuk mahasiswa
     $display_name = sanitize_text_field($_POST['display_name']);
 
     $user_id = wp_create_user($username, $password, $email);
@@ -91,19 +91,6 @@ $users = get_users([
         <div class="input-group">
             <span class="input-group-text"><i class="fas fa-lock"></i></span>
             <input type="password" name="password" class="form-control" placeholder="Password" required>
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Peran</label>
-        <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
-            <select name="peran" class="form-select" required>
-                <option value="">-- Pilih Peran --</option>
-                <option value="mhs">Mahasiswa</option>
-                <option value="dsn">Dosen</option>
-                <option value="kry">Karyawan</option>
-            </select>
         </div>
     </div>
 
