@@ -1,7 +1,4 @@
 <?php
-session_start();
-?>
-<?php
 /*
 Plugin Name: CRUD Kelompok Ku
 Description: Ini adalah plugin CRUD
@@ -55,7 +52,7 @@ function modulku()
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Master</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="admin.php?page=utama&panggil=jenis.php">Manajemen Jenis Keluhan</a></li>
-                            <li><a class="dropdown-item" href="#">Another link</a></li>
+                            <li><a class="dropdown-item" href="admin.php?page=utama&panggil=bagian.php">Bagian</a></li>
                             <li><a class="dropdown-item" href="#">A third link</a></li>
                         </ul>
                     </li>
