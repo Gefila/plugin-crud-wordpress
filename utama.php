@@ -53,6 +53,7 @@ function modulku()
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="admin.php?page=utama&panggil=jenis.php">Manajemen Jenis Keluhan</a></li>
                             <li><a class="dropdown-item" href="admin.php?page=utama&panggil=bagian.php">Bagian</a></li>
+                            <li><a class="dropdown-item" href="admin.php?page=utama&panggil=mahasiswa.php">Mahasiswa</a></li>
                             <li><a class="dropdown-item" href="#">A third link</a></li>
                         </ul>
                     </li>
