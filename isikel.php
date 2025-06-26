@@ -1,64 +1,34 @@
 <?php
-// Handle hapus
-if (isset($_GET['hapus'])) {
-    $idHapus = $_GET['hapus'];
-    mysqli_query($conn, "DELETE FROM tbl_bagian WHERE kdbag = '$idHapus'");
-    echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        Data berhasil dihapus!
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>';
-    echo '<meta http-equiv="refresh" content="1;url=admin.php?page=utama&panggil=bagian.php">';
-}
 
 // Default mode
 $MODE = 'tambah';
-$editData = [];
-
-// Handle edit: ambil data jika ada parameter edit
-if (isset($_GET['edit'])) {
-    $idEdit = $_GET['edit'];
-    $resultEdit = mysqli_query($conn, "SELECT * FROM tbl_bagian WHERE kdbag = '$idEdit'");
-    if ($resultEdit && mysqli_num_rows($resultEdit) > 0) {
-        $editData = mysqli_fetch_assoc($resultEdit);
-        $MODE = 'edit';
-    }
-}
 
 // Proses insert/update data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $kdbag = $_POST['kdbag'];
-    $nmbag = $_POST['nmbag'];
+    $tglKeluhan = date('Y-m-d H:i:s');
+    $idjenis = $_POST['idjenis'];
+    $IsiKeluhan = $_POST['IsiKeluhan'];
+    $NIPNIDNNIM = $user_login;
 
-    // Cek mode berdasarkan parameter edit
-    if (isset($_GET['edit'])) {
-        $query = "UPDATE tbl_bagian SET nmbag = '$nmbag' WHERE kdbag = '$kdbag'";
-    } else {
-        $lastKodeQuery = mysqli_query($conn, "SELECT MAX(kdbag) as maxKode FROM tbl_bagian");
-        $nextKode = "01"; // default jika tidak ada data
-        if ($lastKodeQuery && $row = mysqli_fetch_assoc($lastKodeQuery)) {
-            $maxKode = (int)$row['maxKode'];
-            $nextKode = str_pad($maxKode + 1, 2, '0', STR_PAD_LEFT);
-        }
-        $query = "INSERT INTO tbl_bagian (kdbag, nmbag) VALUES ('$nextKode', '$nmbag')";
-    }
+    $query = "INSERT INTO tbl_keluhan (TglKeluhan, IsiKeluhan, NIPNIDNNIM, IdJenis) VALUES ('$tglKeluhan', '$IsiKeluhan', '$NIPNIDNNIM', '$idjenis')";
 
     if (mysqli_query($conn, $query)) {
         echo '<div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
         Data berhasil disimpan!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>';
-        echo '<meta http-equiv="refresh" content="1;url=admin.php?page=utama&panggil=bagian.php">';
+        echo '<meta http-equiv="refresh" content="1;url=admin.php?page=utama&panggil=keluhan.php">';
     } else {
         echo '<div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-        Gagal menyimpan data!
+        Gagal menyimpan data! ' . mysqli_error($conn) . '
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>';
-        echo '<meta http-equiv="refresh" content="1;url=admin.php?page=utama&panggil=bagian.php">';
+        //echo error
+        echo '<meta http-equiv="refresh" content="1;url=admin.php?page=utama&panggil=keluhan.php">';
     }
 }
 
 // Ambil data dari database untuk ditampilkan di tabel
-$result = mysqli_query($conn, "SELECT * FROM tbl_bagian");
 $jenisList = mysqli_query($conn, "SELECT * FROM tbl_jenis");
 
 ?>
@@ -66,7 +36,7 @@ $jenisList = mysqli_query($conn, "SELECT * FROM tbl_jenis");
 <h2>Isi Keluhan</h2>
 <p>
     silahkan Isi keluhan Bapak/Ibu/Sdr/ <b> <?= $user_nama; ?></b> pada kolom isian yang telah disediakan.
-</p> 
+</p>
 <form method="POST">
     <div class="mb-3 mt-3">
         <label for="idjenis" class="form-label">Jenis Keluhan</label>
@@ -84,10 +54,10 @@ $jenisList = mysqli_query($conn, "SELECT * FROM tbl_jenis");
         </div>
     </div>
     <div class="mb-3">
-        <label for="nmbag" class="form-label">Isi Keluhan</label>
+        <label for="IsiKeluhan" class="form-label">Isi Keluhan</label>
         <div class="input-group">
             <span class="input-group-text"><i class="fas fa-comment-dots"></i></span>
-            <textarea class="form-control" id="nmbag" name="nmbag" rows="4"
+            <textarea class="form-control" id="IsiKeluhan" name="IsiKeluhan" rows="4"
                 placeholder="Masukkan isi keluhan minimal 20 karakter dan maksimal 500 karakter"
                 required></textarea>
         </div>
@@ -97,9 +67,8 @@ $jenisList = mysqli_query($conn, "SELECT * FROM tbl_jenis");
         </div>
     </div>
     <div class="text-center">
-        <button type="submit" class="btn <?= isset($editData['kdbag']) ? 'btn-warning' : 'btn-primary' ?>">
-            <i class="fas <?= isset($editData['kdbag']) ? 'fa-edit' : 'fa-save' ?>"></i>
-            <?= isset($editData['kdbag']) ? 'Ubah' : 'Simpan' ?>
+        <button type="submit" class="btn fa-save"></i>
+            Isi Keluhan
         </button>
         <a href="admin.php?page=utama&panggil=bagian.php" class="btn btn-secondary">
             <i class="fas fa-undo"></i> Batal

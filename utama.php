@@ -11,8 +11,7 @@ Plugin URI: https://google.com
 // Fungsi yang menampilkan isi halaman menu
 ?>
 <?php
-function modulku()
-{
+function modulku() {
     $plugin_url = plugin_dir_url(__FILE__);
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     if ($conn->connect_error) {
@@ -24,7 +23,7 @@ function modulku()
     $user_peran = $current_user->peran;
 
     $alamat = "$plugin_url/logo.png";
-    if($user_peran === 'mhs'){
+    if ($user_peran === 'mhs') {
         $alamat = "https://mahasiswa.atmaluhur.ac.id/foto/2211500085.jpg";
     }
 
@@ -37,7 +36,7 @@ function modulku()
             padding: 0 !important;
         }
 
-        .form-select{
+        .form-select {
             width: 100% !important;
         }
     </style>
@@ -102,8 +101,7 @@ function modulku()
 ?>
 
 <?php
-function tambah_menu_pluginku()
-{
+function tambah_menu_pluginku() {
     add_menu_page(
         'CRUD Kelompok Ku',        // Judul halaman
         'CRUD SI',        // Nama menu di sidebar
